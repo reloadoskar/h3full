@@ -2,32 +2,57 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
+@layer components {
+    .contenedor {
+        @apply p-4;
+    }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+    .boton {
+        @apply transition duration-700 ease-in-out p-2 bg-sky-500 rounded-sm hover:bg-green-400 font-bold uppercase dark:bg-yellow-400 dark:text-gray-900 dark:hover:bg-yellow-300;
+    }
+
+    .botonrojo {
+        @apply transition duration-700 ease-in-out p-2 bg-red-600/0 rounded-sm hover:bg-red-500/40 uppercase text-red-500 hover:text-red-950;
+    }
+
+    .botonverde {
+        @apply transition transition-all duration-700 ease-in-out p-2 rounded-sm uppercase font-bold bg-emerald-600 hover:bg-emerald-500;
+    }
+
+    .link {
+        @apply font-bold text-center uppercase cursor-pointer;
+    }
+
+    .titulo {
+        @apply text-2xl font-bold mb-6;
+    }
+
+    .inputbasico {
+        @apply bg-gray-200 dark:bg-gray-800 border border-gray-500 w-full p-3 rounded-lg mb-4 mt-0;
+    }
+
+    .modalfondo {
+        @apply fixed inset-0 flex items-center justify-center bg-black bg-opacity-50;
+    }
+
+    .modalcontenido {
+        @apply bg-gray-200 dark:bg-gray-900 p-4 rounded-lg shadow-lg w-full md:mx-6 mx-2;
+    }
+
+    .tab {
+        @apply p-4 cursor-pointer hover:bg-gray-800
+    }
+
+    .tabselected {
+        @apply p-4 dark:bg-gray-700 bg-gray-200
+    }
+
+    .tabsection {
+        @apply p-4 dark:bg-gray-700 bg-gray-200
+    }
+
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+    @apply bg-gray-100 text-slate-950 dark:bg-gray-950 dark:text-gray-200;
 }

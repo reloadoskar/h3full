@@ -6,7 +6,7 @@ import EditarPedido from './EditarPedido'
 import Pedidos from './Pedidos'
 import { useState } from 'react'
 import { usePedidos } from './PedidosContext'
-import { useAuth } from '@/components/auth/AuthContext'
+import { useAuth } from '@/components/AuthContext'
 
 export default function Page() {
   const { user } = useAuth()

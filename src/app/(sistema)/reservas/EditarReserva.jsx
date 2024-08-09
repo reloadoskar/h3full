@@ -1,5 +1,5 @@
 import ModalDialog from '@/components/ModalDialog'
-import { useAuth } from '@/components/auth/AuthContext'
+import { useAuth } from '@/components/AuthContext'
 import React, { useEffect, useRef, useState } from 'react'
 import { useReservas } from './ReservasContext'
 

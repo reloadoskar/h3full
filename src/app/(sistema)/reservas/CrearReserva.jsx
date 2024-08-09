@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react'
 import ModalDialog from '@/components/ModalDialog'
 import { useReservas } from './ReservasContext'
-import { useAuth } from '@/components/auth/AuthContext'
+import { useAuth } from '@/components/AuthContext'
 
 export default function CrearReserva() {
   const { user } = useAuth()

@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from 'react'
 import ModalDialog from '@/components/ModalDialog'
 import { useStaff } from './StaffContext'
-import { useAuth } from '@/components/auth/AuthContext'
+import { useAuth } from '@/components/AuthContext'
 import MiembroForm from './MiembroForm'
 
 export default function CrearStaff() {

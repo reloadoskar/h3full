@@ -101,7 +101,7 @@ export default function Proyecto({ proyecto }) {
                         <div className="flex flex-col gap-2">
                             {pagos.length > 0 ?
                                 pagos.map(pago => (
-                                    <div className="flex gap-2 w-full odd:bg-gray-600" key={pago._id}>
+                                    <div className="flex gap-2 w-full dark:odd:bg-gray-600 odd:bg-gray-300" key={pago._id}>
                                         <div className="basis-3/4" >{pago.fecha} </div>
                                         <div className="basis-1/4 text-right">{pago.importe}</div>
                                     </div>
@@ -109,7 +109,7 @@ export default function Proyecto({ proyecto }) {
                                 : null
                             }
                             <div className="flex w-full justify-end">
-                                <div className="basis-1/4 border-t text-right">
+                                <div className="basis-1/4 border-t border-gray-700 dark:border-gray-900 text-right">
                                     {tpagos}
                                 </div>
                             </div>

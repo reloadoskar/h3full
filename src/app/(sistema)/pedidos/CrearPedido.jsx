@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { usePedidos } from './PedidosContext'
-import { useAuth } from '@/components/auth/AuthContext'
+import { useAuth } from '@/components/AuthContext'
 import { useMenu } from '../menu/MenuContext'
 
 export default function CrearPedido() {

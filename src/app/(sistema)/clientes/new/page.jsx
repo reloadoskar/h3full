@@ -3,7 +3,6 @@ import axios from "axios";
 import { useEffect, useState } from "react"
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { toast } from 'sonner';
 export default function NuevoCliente() {
     const { data: session, status } = useSession();
     const router = useRouter();
@@ -34,13 +33,13 @@ export default function NuevoCliente() {
     const createCliente = async () => {
         try {
             const res = await axios.post("/api/cliente/", newCliente)
-            toast.success("Guardado 👍")
+            console.success("Guardado 👍")
             router.push("/catalogos/clientes");
             router.refresh();
 
         } catch (error) {
             // setIsSubmitting(false)
-            toast.error(error.message)
+            console.error(error.message)
         }
     }
     return (

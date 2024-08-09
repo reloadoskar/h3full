@@ -20,7 +20,7 @@ export default function ListaProyectos({ proyectos }) {
             <div className="px-2">
                 Proyectos del mes: {proyectos.length}
             </div>
-            <div className="flex dark:bg-gray-800 px-2">
+            <div className="flex dark:bg-gray-800 bg-gray-300 px-2">
                 <div className="basis-2/6">Cliente</div>
                 <div className="basis-1/6">Proyecto</div>
                 <div className="basis-1/6 text-right">Presupuesto</div>
@@ -28,7 +28,7 @@ export default function ListaProyectos({ proyectos }) {
                 <div className="basis-1/6 text-right">Saldo</div>
             </div>
             {proyectos.map(proyecto => (
-                <div key={proyecto._id} className="flex px-2 gap-4 cursor-pointer hover:bg-gray-700" onClick={() => handleClick(proyecto)}>
+                <div key={proyecto._id} className="flex px-2 gap-4 cursor-pointer dark:hover:bg-gray-700 hover:bg-gray-400 odd:bg-gray-200 dark:odd:bg-gray-600" onClick={() => handleClick(proyecto)}>
                     <div className="basis-2/6">{proyecto.cliente}</div>
                     <div className="basis-1/6">{proyecto.nombre}</div>
                     <div className="basis-1/6 text-right">{proyecto.presupuesto}</div>
@@ -37,7 +37,7 @@ export default function ListaProyectos({ proyectos }) {
 
                 </div>
             ))}
-            <div className="flex px-2">
+            <div className="flex px-2 border-t border-gray-900 dark:border-gray-400">
                 <div className="basis-3/6 text-right">total:</div>
                 <div className="basis-1/6 text-right">{totalProyectos}</div>
                 <div className="basis-1/6 text-right">{totalPagado}</div>

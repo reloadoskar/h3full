@@ -6,7 +6,7 @@ import { useMenu } from './MenuContext'
 import { useCategorias } from './CategoriasContext'
 import { useSubcategorias } from './SubcategoriasContext'
 import Buscador from './Buscador'
-import { useAuth } from '@/components/auth/AuthContext'
+import { useAuth } from '@/components/AuthContext'
 import EditarPlato from './EditarPlato'
 
 export default function Menu() {

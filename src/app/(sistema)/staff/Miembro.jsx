@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import avatar from '@/public/images/avatarH5.png'
+import avatar from '@/images/avatarH5.png'
 import MiembroForm from './MiembroForm'
 import { useStaff } from './StaffContext'
 import { X } from 'lucide-react'

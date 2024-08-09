@@ -5,7 +5,7 @@ import { Search, X } from 'lucide-react'
 import CrearReserva from './CrearReserva'
 import Reservas from './Reservas'
 import { useReservas } from './ReservasContext'
-import { useAuth } from '@/components/auth/AuthContext'
+import { useAuth } from '@/components/AuthContext'
 import EditarReserva from './EditarReserva'
 
 export default function Page() {

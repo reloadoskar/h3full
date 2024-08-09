@@ -5,7 +5,7 @@ import { Search, X } from 'lucide-react'
 import CrearStaff from './CrearStaff'
 import Staff from './Staff'
 import { useStaff } from './StaffContext'
-import { useAuth } from '@/components/auth/AuthContext'
+import { useAuth } from '@/components/AuthContext'
 import { nombreDelDiaSegunFecha } from '@/utils/tools'
 export default function Page() {
   const { user } = useAuth()

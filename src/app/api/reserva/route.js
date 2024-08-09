@@ -1,5 +1,5 @@
 import {NextResponse} from "next/server"
-import { dbConnect } from "@/utils/mongoose"
+import { dbConnect } from "@/utils/conection"
 import Reserva from "@/models/reservacion"
 
 export async function POST(request){

@@ -1,5 +1,5 @@
 import {NextResponse} from "next/server"
-import { dbConnect } from "@/utils/mongoose"
+import { dbConnect } from "@/utils/conection"
 import User from '@/models/user'
 export async function GET(){
     const data = await request.json()

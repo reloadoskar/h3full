@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { dbConnect } from "@/utils/mongoose"
+import { dbConnect } from "@/utils/conection"
 import Venta from "@/models/venta"
 import VentaItem from '@/models/ventaitem'
 import Cliente from '@/models/cliente'

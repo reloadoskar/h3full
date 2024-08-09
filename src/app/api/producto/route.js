@@ -1,6 +1,6 @@
 import {NextResponse} from "next/server"
 // import { adminConnection } from "@/utils/adminConnection"
-import { dbConnect } from "@/utils/mongoose"
+import { dbConnect } from "@/utils/conection"
 import Producto from "@/models/producto"
 
 export async function GET(request){

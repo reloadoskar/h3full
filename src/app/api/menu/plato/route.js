@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { dbConnect } from "@/utils/mongoose"
+import { dbConnect } from "@/utils/conection"
 import Plato from "@/models/plato"
 import path from 'path';
 import { writeFile } from "fs/promises";

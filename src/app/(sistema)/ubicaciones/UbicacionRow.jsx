@@ -2,7 +2,6 @@
 import { useState } from 'react'
 import { Warehouse, Store, Landmark, Building, Monitor } from 'lucide-react'
 import { useUbicacions } from './UbicacionsContext'
-import { toast } from 'sonner'
 export default function UbicacionRow({ data, database }) {
   const { updateUbicacion } = useUbicacions()
   const [ubicacion, setUbicacion] = useState(data)
@@ -13,10 +12,10 @@ export default function UbicacionRow({ data, database }) {
     e.preventDefault()
     setGuardando(true)
     updateUbicacion(database, ubicacion).then(res => {
-      toast("Actualizado correctamente")
+      console.log("Actualizado correctamente")
       editar(false)
     }).catch(err => {
-      toast(err.message)
+      console.error(err.message)
     })
   }
   return !ubicacion ? null :

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { dbConnect } from "@/utils/mongoose"
+import { dbConnect } from "@/utils/conection"
 import Staff from "@/models/staff"
 import { writeFile } from "fs/promises";
 import path from 'path';

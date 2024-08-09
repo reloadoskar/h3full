@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import UbicacionRow from "./UbicacionRow";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { toast } from "sonner";
+
 import { useUbicacions } from "./UbicacionsContext";
 
 //   const ubicacions = [
@@ -22,10 +22,10 @@ export default function Ubicacions() {
     // console.log(status)
     if(status === 'authenticated'){
       loadUbicacions(session.user.database).then(res=>{
-        toast(res.data.message)
+        console.log(res.data.message)
         setDb(session.user.database)
       }).catch(err=>{
-        toast(err)
+        console.error(err)
       })
     }
     return setDb(null)

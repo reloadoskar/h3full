@@ -1,7 +1,6 @@
 import { useClientes } from './ClientesContext'
 import { useUbicacions } from '../ubicaciones/UbicacionsContext'
 import Modal from '@/components/Modal'
-// import { toast } from 'sonner'
 
 export default function ClienteEditable({ open, database }) {
     const { cliente, clientes, setVerCliente, setCliente, updateCliente } = useClientes()
@@ -21,10 +20,10 @@ export default function ClienteEditable({ open, database }) {
             let chnge = clnt[0]
                 chnge = res.data
                 // console.log(chnge)    
-            // toast.success("Actualizado correctamente")
+            console.log("Actualizado correctamente")
             handleClose()
         }).catch((err)=>{
-            // toast.error("Algo salió mal: "+ err)
+            console.error("Algo salió mal: "+ err)
         })
     }
     return !cliente ? null :

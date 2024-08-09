@@ -25,7 +25,7 @@ export default function Clientes() {
     // if (database) {
       loadClientes(database)
         .catch(err => {
-          // toast(err.data.message)
+          console.error(err.data.message)
         })
       loadUbicacions(database).catch(err => 
         console.error("ocurrió un error")

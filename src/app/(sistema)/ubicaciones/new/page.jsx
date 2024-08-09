@@ -3,7 +3,6 @@ import axios from "axios";
 import { useEffect, useState } from "react"
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { toast } from 'sonner';
 
 export default function NuevaUbicacion() {
     const { data: session, status } = useSession();
@@ -30,19 +29,19 @@ export default function NuevaUbicacion() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         setIsSubmitting(true)
-        toast("Enviando...")
+        console.log("Enviando...")
         await createUbicacion()
     }
     const createUbicacion = async () => {
         try {
             const res = await axios.post("/api/ubicacion/", newUbicacion)
-            toast.success("Guardado 👍")
+            console.log("Guardado 👍")
             router.push("/catalogos/ubicaciones");
             router.refresh();
 
         } catch (error) {
             setIsSubmitting(false)
-            toast.error(error.message)
+            console.error(error.message)
         }
     }
     return (

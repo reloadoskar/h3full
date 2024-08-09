@@ -27,7 +27,7 @@ export default function NuevoCliente() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         setIsSubmitting(true)
-        toast("Enviando...")
+        console.log("Enviando...")
         await createCliente()
     }
     const createCliente = async () => {

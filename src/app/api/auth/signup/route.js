@@ -14,10 +14,12 @@ let curDateISO = curDate.toISOString()
 let tryPeriod = curDate.setDate(curDate.getDate() + 30)
 tryPeriod = new Date(tryPeriod).toISOString()
 
+const { MONGODB_URI } = process.env;
+
 export async function POST(request) {
     try {
         // const conn = await adminConnection()
-        const conn = createConnection(`mongodb://0.0.0.0:27017/H3_USRS`)
+        const conn = createConnection(MONGODB_URI+'H3_USRS')
               conn.on("connected", () => console.log("Db connected :::::::"));
               conn.on("disconnected", () => console.log("Db closed ⚠️."));
               if(!conn){
@@ -54,7 +56,7 @@ export async function POST(request) {
             return NextResponse.json({message:"No se guardo el usuario"},{status:401})
         }
 
-        let conn2 = createConnection(`mongodb://0.0.0.0:27017/${dbname}`)
+        let conn2 = createConnection(MONGODB_URI+dbname)
         let Usr = conn2.model('User', UserSchema)
         let Ubi = conn2.model('Ubicacion', UbicacionSchema)
         let Cli = conn2.model('Cliente', ClienteSchema)

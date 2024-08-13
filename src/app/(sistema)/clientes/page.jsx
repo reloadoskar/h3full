@@ -31,7 +31,7 @@ export default function Clientes() {
         console.error("ocurrió un error")
       )
     // }
-  }, [database, loadClientes, loadUbicacions])
+  }, [database])
 
 
 

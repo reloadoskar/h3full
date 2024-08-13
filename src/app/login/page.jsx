@@ -33,7 +33,16 @@ export default function Login() {
     setError("")
     setIsSubmitting(true);
     console.log("enviando...")
-    await logIn();
+    await logIn().then(res=>{
+      if (res.status === "success") {
+        setIsSubmitting(false)
+        return router.push("/dashboard")
+      }
+    }).catch(err=>{
+      setIsSubmitting(false)
+      setError("Usuario o Password incorrectos")
+      console.error(error);
+    });
   };
 
   const logIn = async () => {
@@ -44,8 +53,7 @@ export default function Login() {
         return router.push("/dashboard")
       }
     } catch (error) {
-      setIsSubmitting(false)
-      // console.error(error);
+      console.error(error);
     }
   };
 
@@ -55,7 +63,7 @@ export default function Login() {
         <header className="flex justify-between">
           <Image priority={false} alt="logo hadria" src={Logo} width={100} className="aspect-square mx-auto inset-x-0" />
         </header>
-        {!error.signin ? "" : <p className="bg-red-500 text-white p-2 mb-2 text-center">{error.signin}</p>}
+        {!error ? "" : <p className="bg-red-500 text-white p-2 mb-2 text-center">{error}</p>}
         {isSubmitting ?
           <h3 className="mx-auto text-center font-bold text-xl">Conectando...</h3>
           :

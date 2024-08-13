@@ -16,7 +16,7 @@ export default function ListaProyectos({ proyectos }) {
     return !proyectos ?
         <p className="titulo">No hay proyectos registrados</p>
         :
-        <div className="contenedor">
+        <div className="contenedor overflow-auto">
             <div className="px-2">
                 Proyectos del mes: {proyectos.length}
             </div>

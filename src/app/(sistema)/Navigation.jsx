@@ -107,7 +107,7 @@ export default function Navigation({payload}) {
 								: settings.tipo === "CONTRATISTA" ?
 								<ul>
 									<NavItem goTo={goTo} icon={<LayoutDashboard />} text="Dashboard" linkto="/dashboard" />
-									<NavItem goTo={goTo} icon={<Settings />} text="Configuración" linkto="/settings" />
+									{ user.level === 0 ? <NavItem goTo={goTo} icon={<Settings />} text="Configuración" linkto="/settings" /> : null }
 									<NavItem goTo={goTo} icon={<Users2 />} text="Clientes" linkto="/clientes" />
 									<NavItem goTo={goTo} icon={<HousePlus />} text="Proyectos" linkto="/proyectos" />
 								</ul>

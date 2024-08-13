@@ -6,11 +6,12 @@ import jwt from "jsonwebtoken"
 import { cookies } from "next/headers"
 
 export async function POST(request, res) {
-    const data = await request.json() // console.log(data)
+    const data = await request.json() 
+    console.log(data)
     try {
         await dbConnect("H3_USRS")
         const usuarioExistente = await User.find({ email: data.email }).select("+password").lean()
-        // console.log(usuarioExistente)
+        console.log(usuarioExistente)
         if (!usuarioExistente) return NextResponse.json({ message: "Credenciales invalidas" }, { status: 401 })
         const isMatch = await bcrypt.compareSync(data.password, usuarioExistente[0].password);
         if (!isMatch) {
@@ -38,6 +39,6 @@ export async function POST(request, res) {
             path: '/'})
         return NextResponse.json({ message: "Credenciales validas", payload: payload, status: "success" }, { status: 200 })
         } catch (error) {
-            return NextResponse.json(error.message, { status: 400 })
+            return NextResponse.json(error.message, { status: 402 })
         }
     }

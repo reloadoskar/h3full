@@ -24,7 +24,8 @@ export default function ClientesList({ clientes }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {clientes.filter(cl => cl.clave !== "PEG")
+                        {clientes
+                            // .filter(cl => cl.clave !== "PEG")
                             .sort((a, b) => a.cuentas.reduce((ttl, cnt) => ttl += cnt.saldo, 0) > b.cuentas.reduce((ttl, cnt) => ttl += cnt.saldo, 0) ? -1 : 1)
                             .map(cliente => (
                                 <tr key={cliente._id}
@@ -74,7 +75,8 @@ export default function ClientesList({ clientes }) {
             </div>
 
             <div className="md:hidden grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {clientes.filter(cl => cl.clave !== "PEG")
+                {clientes
+                    // .filter(cl => cl.clave !== "PEG")
                     .sort((a, b) => a.cuentas.reduce((ttl, cnt) => ttl += cnt.saldo, 0) > b.cuentas.reduce((ttl, cnt) => ttl += cnt.saldo, 0) ? -1 : 1)
                     .map(cliente => (
                         <div key={cliente._id} className="bg-gray-700 rounded-md p-4 flex gap-4">

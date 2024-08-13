@@ -68,7 +68,7 @@ export default function Login() {
               value={newUser.email}
               autoFocus
               required
-              className="bg-gray-800 border-2 w-full p-3 rounded-lg my-4"
+              className="inputbasico"
             />
             <input
               type="password"
@@ -78,7 +78,7 @@ export default function Login() {
               onChange={handleChange}
               value={newUser.password}
               autoFocus
-              className="bg-gray-800 border-2 w-full p-3 rounded-lg my-4"
+              className="inputbasico"
             />
             <button type="submit" className="boton text-white font-semibold px-8 py-2 rounded-lg w-full">
               Enviar

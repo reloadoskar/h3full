@@ -1,13 +1,20 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useGastos } from "./ContextGasto"
+import { useAuth } from "@/components/AuthContext"
 
 export default function CrearGasto({ proyecto, setaddGasto }) {
-    const db="contratista"
+    const {user} = useAuth()
+    const [database , setDatabase] = useState("")
     const {crearGasto} = useGastos()
     const [guardando, setGuardando] = useState(false)
     const [descripcion, setDescripcion] = useState("")
     const [fecha, setFecha] = useState("")
     const [importe, setImporte] = useState(0)
+    useEffect(() => {
+        if (user) {
+            setDatabase(user.database)
+        }
+    }, [user])
     const handleSubmit = async (e) => {
         e.preventDefault()
         setGuardando(true)
@@ -17,14 +24,14 @@ export default function CrearGasto({ proyecto, setaddGasto }) {
             descripcion: descripcion,
             importe: importe
         }
-        await crearGasto(db, newGasto).then(() => {
+        await crearGasto(database, newGasto).then(() => {
             setGuardando(false)
             setaddGasto(false)
         }).catch(e => console.log(e))
     }
     return (
         <form className="w-full" onSubmit={handleSubmit}>
-            <div className="flex p-4 my-4 gap-4 border border-gray-700 rounded-md w-full">
+            <div className="flex flex-col md:flex-row p-4 my-4 gap-4 border border-gray-700 rounded-md w-full">
                 {guardando ?
                     <p className="titulo mx-auto animate-pulse">Guardando...</p>
                     : <>

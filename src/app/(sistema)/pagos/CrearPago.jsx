@@ -35,7 +35,7 @@ export default function CrearPago({ proyecto, setaddPago }) {
     }
     return (
         <form onSubmit={handleSubmit} className="w-full">
-            <div className="flex p-4 my-4 gap-4 border border-gray-900 rounded-md w-full">
+            <div className="flex flex-col md:flex-row p-4 my-4 gap-4 border border-gray-900 rounded-md w-full">
                 {guardando ? <p className="titulo mx-auto">guardando...</p> :
                     <>
                         <div className="absolute -top-0 -right-2">

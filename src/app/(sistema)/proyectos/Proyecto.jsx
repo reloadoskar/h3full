@@ -3,6 +3,7 @@ import CrearPago from "../pagos/CrearPago"
 import CrearGasto from "../gastos/CrearGasto"
 import { usePagos } from "../pagos/ContextPago"
 import { useGastos } from "../gastos/ContextGasto"
+import { numeroFormateado } from "@/utils/tools"
 
 export default function Proyecto({ proyecto }) {
     const [addPago, setaddPago] = useState(false)
@@ -58,14 +59,14 @@ export default function Proyecto({ proyecto }) {
                             </div>
                             <div className="flex">
                                 <p className="basis-1/2">Presupuesto:</p>
-                                <div className="basis-1/2 text-right">${proyecto.presupuesto}</div>
+                                <div className="basis-1/2 text-right">${numeroFormateado(proyecto.presupuesto)}</div>
                             </div>
                             <div className="flex">
                                 <div className="basis-3/4">
                                     pagos: ({proyecto.pagos.length}):
                                 </div>
                                 <div className="basis-1/4 text-right">
-                                    ${tpagos}
+                                    ${numeroFormateado(tpagos)}
                                 </div>
 
                             </div>
@@ -74,7 +75,7 @@ export default function Proyecto({ proyecto }) {
                                     Saldo:
                                 </div>
                                 <div className="basis-1/4 text-right border-t border-gray-600">
-                                    ${proyecto.presupuesto - tpagos}
+                                    ${numeroFormateado(proyecto.presupuesto - tpagos)}
                                 </div>
                             </div>
                             <div className="flex">
@@ -82,7 +83,7 @@ export default function Proyecto({ proyecto }) {
                                     Gastos:
                                 </div>
                                 <div className="basis-1/4 text-right">
-                                    ${tgastos}
+                                    ${numeroFormateado(tgastos)}
                                 </div>
                             </div>
                             <div className="flex">
@@ -90,7 +91,7 @@ export default function Proyecto({ proyecto }) {
                                     Utilidad:
                                 </div>
                                 <div className="basis-1/4 text-right">
-                                    ${proyecto.presupuesto - tgastos}
+                                    ${numeroFormateado(proyecto.presupuesto - tgastos)}
                                 </div>
                             </div>
 
@@ -103,14 +104,14 @@ export default function Proyecto({ proyecto }) {
                                 pagos.map(pago => (
                                     <div className="flex gap-2 w-full dark:odd:bg-gray-600 odd:bg-gray-300" key={pago._id}>
                                         <div className="basis-3/4" >{pago.fecha} </div>
-                                        <div className="basis-1/4 text-right">{pago.importe}</div>
+                                        <div className="basis-1/4 text-right">{numeroFormateado(pago.importe)}</div>
                                     </div>
                                 ))
                                 : null
                             }
                             <div className="flex w-full justify-end">
                                 <div className="basis-1/4 border-t border-gray-700 dark:border-gray-900 text-right">
-                                    {tpagos}
+                                    { numeroFormateado(tpagos)}
                                 </div>
                             </div>
 
@@ -125,7 +126,32 @@ export default function Proyecto({ proyecto }) {
                     }
 
                     {activeTab === 2 &&
-                        <button className="boton" onClick={() => setaddGasto(true)}>agregar gasto</button>
+                        <div className="flex flex-col gap-2">
+                            {gastos.length > 0 ?
+                                gastos.map(gasto => (
+                                    <div className="flex gap-2 w-full dark:odd:bg-gray-600 odd:bg-gray-300" key={gasto._id}>
+                                        <div className="basis-1/4" >{gasto.fecha} </div>
+                                        <div className="basis-2/4" >{gasto.descripcion} </div>
+                                        <div className="basis-1/4 text-right">{ numeroFormateado(gasto.importe)}</div>
+                                    </div>
+                                ))
+                                : null
+                            }
+                            <div className="flex w-full justify-end">
+                                <div className="basis-1/4 border-t border-gray-700 dark:border-gray-900 text-right">
+                                    { numeroFormateado( tgastos )}
+                                </div>
+                            </div>
+
+                            <div className="flex flex-row gap-4 relative">
+                                {addGasto ?
+                                    <CrearGasto proyecto={proyecto} setaddGasto={setaddGasto} />
+                                    :
+                                    <button className="boton" onClick={() => setaddGasto(true)}>agregar gasto</button>
+                                }
+                            </div>
+                        </div>
+                        // <button className="boton" onClick={() => setaddGasto(true)}>agregar gasto</button>
                     }
                 </section>
 

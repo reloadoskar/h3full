@@ -3,9 +3,9 @@ import { Roboto } from "next/font/google"
 import { ProvideAuth } from "@/components/AuthContext";
 
 export const metadata = {
-  title: "Hdra - versión full",
-  description: "Pagina principal de Hadria Full",
-  keywords: "tienda, cocina, restaurante, online, ecommerce"
+  title: "Hadria 3",
+  description: "Sistema Hadria, todos los servicios",
+  keywords: "tienda, cocina, restaurante, online, ecommerce, sistema, erp, punto de venta"
 }
 
 const roboto = Roboto({

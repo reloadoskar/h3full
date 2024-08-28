@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useEffect, useContext, createContext } from "react"
-import { useRouter } from "next/navigation";
+import axios from "axios"
 const authContext = createContext();
 
 export function ProvideAuth({ children }) {
@@ -17,30 +17,21 @@ function useProvideAuth() {
     const [user, setUser] = useState(null);
     const [token, setToken] = useState(null);
     const [mensaje, setMensaje] = useState(null)
-    const router = useRouter()
+    const [error, setError] = useState("");
 
     const login = async (data) => {
         try {
-            const body = JSON.stringify(data)
-
-            const res = await fetch("api/auth", { method: 'POST', body: body })
-            const d = await res.json()
-            // return console.log(d)
-            if (d.status === 'success') {
+            const res = await axios.post("api/auth", { data })
+            // console.log(res)
+            if (res.data.status === 'success') {
                 setAutenticado(true)
-                return setUser(d.payload)
+                setUser(res.data.payload)
+                return res.data
             }
-            return {
-                status: d.status,
-                message: d.message,
-                err: d.err
-            }
+            setError("Usuario o Password incorrecto.")
+            
         } catch (err) {
-            return {
-                status: 'error',
-                message: "Imposible conectar, revise su conexión a Internet.",
-                err
-            }
+            setError("Error al autenticar.")
         }
     }
 
@@ -67,6 +58,7 @@ function useProvideAuth() {
         token,
         autenticado, setAutenticado,
         mensaje,
+        error,
         login,
         signup,
         logout,

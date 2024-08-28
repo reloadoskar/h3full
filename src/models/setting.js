@@ -8,7 +8,8 @@ var SettingSchema = Schema({
     direccion:{type:String},
     horario:{type:String}, 
     plan:{type:String},
-    mesas:{type:Number}
+    mesas:{type:Number},
+    secciones: [{type:String}]
 },{
     timestamps: true
 });

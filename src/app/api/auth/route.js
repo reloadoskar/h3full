@@ -1,21 +1,32 @@
 import { NextResponse } from "next/server"
-import { dbConnect } from "@/utils/conection"
-import User from "@/models/user"
+// import { dbConnect } from "@/utils/conection"
+import UserSchema from "@/schemas/user";
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 import { cookies } from "next/headers"
+import { createConnection } from "mongoose";
+const { MONGODB_URI } = process.env;
 
-export async function POST(request, res) {
-    const data = await request.json() 
-    console.log(data)
+export async function POST(request) {
+    const req = await request.json()
+    // console.log(req)
     try {
-        await dbConnect("H3_USRS")
-        const usuarioExistente = await User.find({ email: data.email }).select("+password").lean()
-        console.log(usuarioExistente)
-        if (!usuarioExistente) return NextResponse.json({ message: "Credenciales invalidas" }, { status: 401 })
-        const isMatch = await bcrypt.compareSync(data.password, usuarioExistente[0].password);
+        const conn = createConnection(MONGODB_URI + 'H3_USRS')
+              conn.on("connected", () => console.log("Db connected :::::::"));
+              conn.on("disconnected", () => console.log("Db closed ⚠️."));
+                if (!conn) {
+                    throw new Error("No se pudo conectar a la base de datos")
+                }
+        let User = conn.model('User', UserSchema)
+        
+        
+        
+        const usuarioExistente = await User.find({ email: req.data.email }).select("+password").lean()
+        // console.log(usuarioExistente)
+        if (usuarioExistente.length === 0) return NextResponse.json({ message: "Credenciales invalidas", status: "error" }, { status: 200 })
+        const isMatch = bcrypt.compareSync(req.data.password, usuarioExistente[0].password);
         if (!isMatch) {
-            return NextResponse.json({ message: "Credenciales Invalidas ps" }, { status: 401 })
+            return NextResponse.json({ message: "Credenciales Invalidas ps", status: "error" }, { status: 200 })
         }
 
         const payload = {
@@ -31,14 +42,17 @@ export async function POST(request, res) {
         } // console.log(payload)
 
         let token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '48h' })
-        
+
         cookies().set("usertoken", token, {
-            httpOnly: false, secure: process.env.NEDE_ENV === "production",
+            httpOnly: false, secure: process.env.NODE_ENV === "production",
             sameSite: 'strict',
             maxAge: 1000 * 60 * 60 * 24 * 30,
-            path: '/'})
+            path: '/'
+        })
+
+        conn.close()
         return NextResponse.json({ message: "Credenciales validas", payload: payload, status: "success" }, { status: 200 })
-        } catch (error) {
-            return NextResponse.json(error.message, { status: 402 })
-        }
+    } catch (error) {
+        return NextResponse.json(error.message, { status: 500 })
     }
+}

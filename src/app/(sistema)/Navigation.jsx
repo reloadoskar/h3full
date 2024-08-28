@@ -1,23 +1,22 @@
 'use client'
-import { FolderTree, CalendarRange, Users, Clipboard, MenuSquare, LayoutDashboard, Menu, ShoppingBag, ClipboardList, X, Store, TableProperties, Warehouse, MoreVertical, Settings, Moon, Sun, Users2, HousePlus } from "lucide-react";
+import { FolderTree, CalendarRange, Users, Clipboard, MenuSquare, LayoutDashboard, Menu, ShoppingBag, ClipboardList, X, Store, TableProperties, Warehouse, MoreVertical, Settings, Moon, Sun, Users2, HousePlus, LucideUsers } from "lucide-react";
 import NavItem from "./NavItem";
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import avatar from '@/images/avatarH5.png'
 import { useAuth } from '@/components/AuthContext'
-import Dropdown from "@/components/Dropdown";
 import { useSettings } from "./settings/settingsContext";
 import Switch from "@/components/Switch";
 
 export default function Navigation({payload}) {
-	const { user, autenticado, setUser, setAutenticado } = useAuth()	
+	const { user, autenticado, setUser, setAutenticado, logout } = useAuth()	
 	const [theme, setTheme] = useState("")
 	const {settings, loadSettings } = useSettings()
 	
 	const ref = useRef(null)
 	const router = useRouter()
-	const [expanded, setExpanded] = useState(false)
+	const [expanded, setExpanded] = useState(true)
 	const goTo = (here) => {
 		router.push(here);
 		setExpanded(false)
@@ -73,6 +72,12 @@ export default function Navigation({payload}) {
 			window.removeEventListener("mousedown", handleOutsideClick)
 		}
 	}, [ref])
+
+	const handleLogOut = () =>{
+		logout(()=>{
+			router.push("/login")
+		})
+	}
 	return (
 		<div className="flex flex-col" ref={ref}>
 			<div className={`fixed md:w-1/4 w-[90%] inset-0 bg-gradient-to-b  flex flex-col from-white/95 to-white/80
@@ -92,44 +97,29 @@ export default function Navigation({payload}) {
 				<div className="px-3 py-2 flex gap-2">
 					{theme === "dark" ? <Moon /> : <Sun />} <Switch label="darkmode" value={theme === "dark" ? true : false} action={handleChange} />
 				</div>
-				<div className="flex-1">
+				<div className="flex-1 overflow-y-auto">
 					<nav>
-						{!settings ? null :
-							settings.tipo === "RESTAURANTE" ?
-								<ul className="flex flex-col gap-2">
-									<NavItem goTo={goTo} icon={<LayoutDashboard />} text="Dashboard" linkto="/dashboard" />
-									<NavItem goTo={goTo} icon={<Settings />} text="Configuración" linkto="/settings" />
-									<NavItem goTo={goTo} icon={<MenuSquare />} text="Menú" linkto="/menu" />
-									<NavItem goTo={goTo} icon={<CalendarRange />} text="Reservaciones" linkto="/reservas" />
-									<NavItem goTo={goTo} icon={<Clipboard />} text="Pedidos" linkto="/pedidos" />
-									<NavItem goTo={goTo} icon={<Users />} text="Staff" linkto="/staff" />
-								</ul>
-								: settings.tipo === "CONTRATISTA" ?
-								<ul>
-									<NavItem goTo={goTo} icon={<LayoutDashboard />} text="Dashboard" linkto="/dashboard" />
-									{ user.level === 0 ? <NavItem goTo={goTo} icon={<Settings />} text="Configuración" linkto="/settings" /> : null }
-									<NavItem goTo={goTo} icon={<Users2 />} text="Clientes" linkto="/clientes" />
-									<NavItem goTo={goTo} icon={<HousePlus />} text="Proyectos" linkto="/proyectos" />
-								</ul>
-								:
-								<ul className="flex flex-col gap-2">
-									<NavItem goTo={goTo} icon={<Settings />} text="Configuración" linkto="/settings" />
-									<NavItem goTo={goTo} icon={<LayoutDashboard />} text="Dashboard" linkto="/dashboard" />
-									{/* <NavItem goTo={goTo} icon={<FolderTree />} text="Catálogos" linkto="/catalogos" /> */}
-									<Dropdown titulo="Catálogos" icon={<FolderTree />} items={[
-										{ text: "Clientes", goTo: goTo, icon: <ClipboardList />, linkto: "/clientes" },
-										{ text: "Empleados", goTo: goTo, icon: <ClipboardList />, linkto: "/empleados" },
-										{ text: "Productores", goTo: goTo, icon: <ClipboardList />, linkto: "/productors" },
-										{ text: "Productos", goTo: goTo, icon: <ClipboardList />, linkto: "/productos" },
-										{ text: "Ubicaciones", goTo: goTo, icon: <ClipboardList />, linkto: "/ubicaciones" },
-									]}
-									/>
-									<NavItem goTo={goTo} icon={<Warehouse />} text="Compras" linkto="/compras" />
-									<NavItem goTo={goTo} icon={<TableProperties />} text="Inventario" linkto="/inventario" />
-									<NavItem goTo={goTo} icon={<ShoppingBag />} text="Ventas" linkto="/ventas" />
-									<NavItem goTo={goTo} icon={<Store />} text="Punto de venta" linkto="/pdv" />
-								</ul>
-						}
+						<ul className="flex flex-col gap-2 ">
+							{ user?.level === 0 ? <NavItem goTo={goTo} icon={<Settings />} text="Configuración" linkto="/settings" /> : null }
+							{ settings?.secciones?.find(sec=>sec==="dashboard") ? <NavItem goTo={goTo} icon={<LayoutDashboard />} text="Dashboard" linkto="/dashboard" /> : null }
+							{ settings?.secciones?.find(sec=>sec==="menu") ? <NavItem goTo={goTo} icon={<MenuSquare />} text="Menú" linkto="/menu" /> : null }
+							{ settings?.secciones?.find(sec=>sec==="reservas") ? <NavItem goTo={goTo} icon={<CalendarRange />} text="Reservaciones" linkto="/reservas" /> : null }
+							{ settings?.secciones?.find(sec=>sec==="pedidos") ? <NavItem goTo={goTo} icon={<Clipboard />} text="Pedidos" linkto="/pedidos" /> : null }
+							{ settings?.secciones?.find(sec=>sec==="staff") ? <NavItem goTo={goTo} icon={<Users />} text="Staff" linkto="/staff" /> : null }
+							{ settings?.secciones?.find(sec=>sec==="proyectos") ? <NavItem goTo={goTo} icon={<HousePlus />} text="Proyectos" linkto="/proyectos" /> : null }
+							{ settings?.secciones?.find(sec=>sec==="clientes") ? <NavItem goTo={goTo} icon={<LucideUsers />} text="Clientes" linkto="/clientes" /> : null }
+							{ settings?.secciones?.find(sec=>sec==="empleados") ? <NavItem goTo={goTo} icon={<Users2 />} text="Empleados" linkto="/empleados" /> : null }
+							{ settings?.secciones?.find(sec=>sec==="productores") ? <NavItem goTo={goTo} icon={<Users2 />} text="Productores" linkto="/productores" /> : null }
+							{ settings?.secciones?.find(sec=>sec==="productos") ? <NavItem goTo={goTo} icon={<Users2 />} text="Productos" linkto="/productos" /> : null }
+							{ settings?.secciones?.find(sec=>sec==="ubicaciones") ? <NavItem goTo={goTo} icon={<Users2 />} text="Ubicaciones" linkto="/ubicaciones" /> : null }
+							{ settings?.secciones?.find(sec=>sec==="compras") ? <NavItem goTo={goTo} icon={<Warehouse />} text="Compras" linkto="/compras" /> : null }
+							{ settings?.secciones?.find(sec=>sec==="inventario") ? <NavItem goTo={goTo} icon={<TableProperties />} text="Inventario" linkto="/inventario" /> : null }
+							{ settings?.secciones?.find(sec=>sec==="ventas") ? <NavItem goTo={goTo} icon={<ShoppingBag />} text="Ventas" linkto="/ventas" /> : null }
+							{ settings?.secciones?.find(sec=>sec==="pdv") ? <NavItem goTo={goTo} icon={<Store />} text="Punto de venta" linkto="/pdv" /> : null }
+							<li>
+								<button onClick={()=>handleLogOut()}>Salir</button>
+							</li>
+						</ul>						
 					</nav>
 				</div>
 				<div className='border-t flex p-3'>
@@ -138,10 +128,10 @@ export default function Navigation({payload}) {
                     flex justify-between items-center overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}
                 `}>
 						<div className='leading-4'>
-							{/* <h4 className='font-semibold'>{!session ? "" : session.user.nombre}</h4> */}
-							{/* <span className='text-xs text-gray-500'>{!session ? "" : session.user.email}</span> */}
+							<h4 className='font-semibold'>{!user ? "" : user.nombre}</h4>
+							<span className='text-xs text-gray-500'>{!user ? "" : user.email}</span>
 						</div>
-						<MoreVertical size={20} />
+						<button><MoreVertical size={20} /></button>
 					</div>
 				</div>
 			</div>

@@ -1,35 +1,30 @@
 
 'use client'
-import { useSession } from "next-auth/react";
+
 import UbicacionRow from "./UbicacionRow";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
 import { useUbicacions } from "./UbicacionsContext";
+import { useAuth } from "@/components/AuthContext";
 
-//   const ubicacions = [
-//     {tipo: "BODEGA",nombre:"BODEGA", direccion:"Av. Siempre viva 123", telefono:"5512345678", email:"bodega@mail.com", capacidad:1200, empaquesCapacidad:"CAJAS", empleados:[]},
-//     {tipo: "SUCURSAL",nombre:"LAPRINCIPAL", direccion:"Av. 45  654, Numeros, CDMX", telefono:"5512345678", email:"bodega@mail.com", capacidad:500, empaquesCapacidad:"CAJAS", empleados:[]},
-//     {tipo: "SUCURSAL",nombre:"LASEGUNDA", direccion:"Romanos. 45 , Patos, CDMX", telefono:"5512345678", email:"bodega@mail.com", capacidad:150, empaquesCapacidad:"CAJAS", empleados:[]},
-//     {tipo: "BANCO",nombre:"BANPOPO", direccion:"Sanitario 1, Miercoles, CDMX", telefono:"5512345678", email:"bodega@mail.com", capacidad:200, empaquesCapacidad:"CAJAS", empleados:[] },
-// ]
 export default function Ubicacions() {
   const [database, setDb] = useState(null)
   const {ubicacions, loadUbicacions, ubicacion} = useUbicacions()
-  const { data: session, status } = useSession()
+  const { user, autenticado } = useAuth()
 
   useEffect(() => {
     // console.log(status)
-    if(status === 'authenticated'){
-      loadUbicacions(session.user.database).then(res=>{
+    if(autenticado){
+      loadUbicacions(user.database).then(res=>{
         console.log(res.data.message)
-        setDb(session.user.database)
+        setDb(user.database)
       }).catch(err=>{
         console.error(err)
       })
     }
     return setDb(null)
-  }, [session, status, loadUbicacions])
+  }, [autenticado])
 
   return (
     <div className="p-6 w-full flex flex-col gap-4">

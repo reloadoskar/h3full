@@ -13,48 +13,43 @@ export default function Login() {
     dbname: "",
     password: "",
   })
-
-  const { autenticado, login } = useAuth()
+  const [theme, setTheme] = useState("")
+  const { autenticado, login, error } = useAuth()
   const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      return setTheme("dark")
+    }
+    return setTheme("light")
+  }, [])
+
   useEffect(() => {
     if (autenticado) {
       router.push('/dashboard')
     }
   }, [autenticado])
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState("");
-
+  useEffect(() => {
+    if (theme === "dark") {
+      return document.querySelector("html").classList.add("dark")
+    }
+    return document.querySelector("html").classList.remove("dark")
+  }, [theme])
 
   const handleChange = (e) => setNewUser({ ...newUser, [e.target.name]: e.target.value });
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setError("")
     setIsSubmitting(true);
-    console.log("enviando...")
-    await logIn().then(res=>{
-      if (res.status === "success") {
-        setIsSubmitting(false)
-        return router.push("/dashboard")
-      }
+    login({ email: newUser.email, password: newUser.password }).then(res=>{
+      // console.log(res)
+      setIsSubmitting(false)
     }).catch(err=>{
       setIsSubmitting(false)
-      setError("Usuario o Password incorrectos")
-      console.error(error);
-    });
-  };
-
-  const logIn = async () => {
-    try {
-      const res = await login({ email: newUser.email, password: newUser.password })
-      if (res.status === "success") {
-        setIsSubmitting(false)
-        return router.push("/dashboard")
-      }
-    } catch (error) {
-      console.error(error);
-    }
+      console.log(err)
+    })
   };
 
   return (
@@ -63,11 +58,11 @@ export default function Login() {
         <header className="flex justify-between">
           <Image priority={false} alt="logo hadria" src={Logo} width={100} className="aspect-square mx-auto inset-x-0" />
         </header>
-        {!error ? "" : <p className="bg-red-500 text-white p-2 mb-2 text-center">{error}</p>}
         {isSubmitting ?
           <h3 className="mx-auto text-center font-bold text-xl">Conectando...</h3>
           :
           <>
+          {!error ? "" : <p className="bg-red-500 text-white p-2 mb-2 text-center">{error}</p>}
             <input
               type="email"
               placeholder="Correo electrónico"

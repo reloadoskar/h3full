@@ -12,19 +12,24 @@ if (!cached) {
 
 export const dbConnect = async (dbName = null) => {
     if (cached.conn){
+        // await cached.conn.close();
         console.log("Conexión guardada ✅")
         console.log("Conexiones: ["+mongoose.connections.length+"]")
-        return cached.conn;
+        // console.log("Conectando a: "+dbName)
+        // cached.conn.useDb(dbName) 
+        //= await mongoose.connect(MONGODB_URI+dbName);
+        return cached.conn
     } 
     console.log("Nueva conexión 🆕")
     if(!dbName){
         console.log("No db!")
-        let conx = await mongoose.connect(MONGODB_URI+"H3_USRS")
-        return conx
+        cached.conn = await mongoose.connect(MONGODB_URI+"H3_USRS")
+        // return cached.conn
     }else{
+        console.log("DB:"+dbName)
         cached.conn = await mongoose.connect(MONGODB_URI + dbName);
     }
-    console.log("Conexiones: ["+mongoose.connections.length+"]")
+    // console.log("Conexiones: ["+mongoose.connections.length+"]")
 
     return cached.conn;
 };

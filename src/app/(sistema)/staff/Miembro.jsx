@@ -1,6 +1,5 @@
 'use client'
 import { useState } from 'react'
-import avatar from '@/images/avatarH5.png'
 import MiembroForm from './MiembroForm'
 import { useStaff } from './StaffContext'
 import { X } from 'lucide-react'
@@ -21,7 +20,7 @@ export default function Miembro({ membr, user }) {
         vista === "basic" ?
             <div className="tarjeta1" onClick={switchVista}>
                 <div className='flex gap-4 align-middle items-center'>
-                    <img className='w-10 rounded-full object-cover aspect-square' src={membr.avatar || avatar} alt="user avatar" />
+                    <img className='w-10 rounded-full object-cover aspect-square' src={membr.avatar || "/avatarH5.png"} alt="user avatar" />
                     <div className='w-2/4 text-center'>{membr.nombre}</div>
                     <div>ACTIVO</div>
                 </div>
@@ -35,7 +34,7 @@ export default function Miembro({ membr, user }) {
                 </div>
                 {editMode ? null :
                     <div className=''>
-                        <img className='mx-auto w-24 rounded-full object-cover aspect-square' src={membr.avatar || avatar} alt="user avatar" />
+                        <img className='mx-auto w-24 rounded-full object-cover aspect-square' src={membr.avatar || "/avatarH5.png"} alt="user avatar" />
                     </div>
                 }
 

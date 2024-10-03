@@ -1,5 +1,6 @@
 'use client'
 import { createContext, useState, useCallback, useContext, useEffect } from "react"
+import axios from "axios"
 
 export const StaffContext = createContext()
 
@@ -10,37 +11,26 @@ export const useStaff = () => {
 export const StaffContextProvider = (props) => {
     const [staff, setStaff] = useState([])
     const [puestos, setPuestos] = useState([
-        {_id:1,nombre:"MESERO"},
-        {_id:2, nombre:"CAJAS"},
-        {_id:3,nombre:"RECEPCIONISTA"},
-        {_id:4, nombre:"COCINERO"}])
+        { _id: 1, nombre: "MESERO" },
+        { _id: 2, nombre: "CAJAS" },
+        { _id: 3, nombre: "RECEPCIONISTA" },
+        { _id: 4, nombre: "COCINERO" }])
     const [staffSelected, setStaffelected] = useState(null)
     const [staffFounded, setStafffounded] = useState([])
 
     const loadStaff = useCallback(async (database) => {
         if (database) {
-            const response = await fetch("/api/staff/s", {
-                method: 'POST',
-                body: JSON.stringify({ database: database }),
-            })
-            const data = await response.json()
-            setStaff(data.staffs)
+            const response = await axios.post("/api/staff/s", {database})
+            setStaff(response.data.staffs)
             return response;
         }
     }, [])
 
     const crearStaff = async (dats) => {
         if (dats) {
-            const res = await fetch("/api/staff", {
-                method: 'POST',
-                body: dats,
-            })
-            const data = await res.json()
-            // console.log(data)
-            if(data.status === 200 ){
-                setStaff([data.staff, ...staff])
-            }
-            return data
+            const res = await axios.post("/api/staff", dats)
+            setStaff([res.data.staff, ...staff])
+            return res
         }
     }
 
@@ -50,29 +40,18 @@ export const StaffContextProvider = (props) => {
 
     const editarStaff = async (stf) => {
         if (stf) {
-            const res = await fetch("/api/staff", {
-                method: 'PUT',
-                body: stf
-            })
-            const dt = await res.json()
+            const res = await axios.put("/api/staff", stf)
             let staffSinOriginal = staff.filter(rsrv => rsrv._id !== stf._id)
-            staffSinOriginal.push(dt.staffUpdated)
-            setStaff(staffSinOriginal)
-            return dt
+            setStaff([res.data.staff, staffSinOriginal])
+            return res
         }
     }
 
     const eliminarStaff = async (database, stf) => {
-        if(database){
-            const res = await fetch("/api/staff", {
-                method: "DELETE",
-                body: JSON.stringify({database, stf})
-            })
-
-            const dt= await res.json()
-            let staffMenosEliminado = staff.filter(prevstf => prevstf._id!== stf._id)
-            setStaff(staffMenosEliminado)
-            return dt
+        if (database) {
+            const res = await axios.delete("/api/staff", {database, stf })
+            setStaff(staff.filter(prevstf => prevstf._id !== stf._id))
+            return res
         }
     }
 
@@ -98,7 +77,7 @@ export const StaffContextProvider = (props) => {
     }
 
     const ordenarPorFecha = () => {
-        
+
         let s = staff.sort(sortArray)
         return setStaff(s)
     }

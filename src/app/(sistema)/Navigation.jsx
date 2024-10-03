@@ -1,22 +1,20 @@
 'use client'
-import { FolderTree, CalendarRange, Users, Clipboard, MenuSquare, LayoutDashboard, Menu, ShoppingBag, ClipboardList, X, Store, TableProperties, Warehouse, MoreVertical, Settings, Moon, Sun, Users2, HousePlus, LucideUsers } from "lucide-react";
+import { CalendarRange, Users, Clipboard, MenuSquare, LayoutDashboard, Menu, ShoppingBag, X, Store, TableProperties, Warehouse, MoreVertical, Settings, Moon, Sun, Users2, HousePlus, LucideUsers, LogOut } from "lucide-react";
 import NavItem from "./NavItem";
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
-import avatar from '@/images/avatarH5.png'
 import { useAuth } from '@/components/AuthContext'
 import { useSettings } from "./settings/settingsContext";
 import Switch from "@/components/Switch";
 
-export default function Navigation({payload}) {
-	const { user, autenticado, setUser, setAutenticado, logout } = useAuth()	
+export default function Navigation() {
+	const { user, logout } = useAuth()	
 	const [theme, setTheme] = useState("")
-	const {settings, loadSettings } = useSettings()
+	const {settings } = useSettings()
 	
 	const ref = useRef(null)
 	const router = useRouter()
-	const [expanded, setExpanded] = useState(true)
+	const [expanded, setExpanded] = useState(false)
 	const goTo = (here) => {
 		router.push(here);
 		setExpanded(false)
@@ -29,13 +27,6 @@ export default function Navigation({payload}) {
 		return setTheme("light")		
 	}, [])
 
-	useEffect(()=>{
-		if(payload){
-			setUser(payload)
-			setAutenticado(true)
-		}
-	},[payload])
-
 	useEffect(() => {
 		if (theme === "dark") {
 			return document.querySelector("html").classList.add("dark")
@@ -46,19 +37,6 @@ export default function Navigation({payload}) {
 	const handleChange = () => {
 		setTheme(prevTheme => prevTheme === "light" ? "dark" : "light")
 	}
-
-	useEffect(() => {
-		if (autenticado) {
-			// console.log(user)
-			
-			loadSettings(user.database).then(res => {
-				
-			})
-		}
-	}, [user, autenticado])
-
-	// useEffect(() => {
-	// }, [session])
 
 	useEffect(() => {
 		const handleOutsideClick = (e) => {
@@ -117,13 +95,16 @@ export default function Navigation({payload}) {
 							{ settings?.secciones?.find(sec=>sec==="ventas") ? <NavItem goTo={goTo} icon={<ShoppingBag />} text="Ventas" linkto="/ventas" /> : null }
 							{ settings?.secciones?.find(sec=>sec==="pdv") ? <NavItem goTo={goTo} icon={<Store />} text="Punto de venta" linkto="/pdv" /> : null }
 							<li>
-								<button onClick={()=>handleLogOut()}>Salir</button>
+								<button onClick={()=>handleLogOut()} className="px-3 flex gap-4">
+									<LogOut />
+									Salir
+								</button>
 							</li>
 						</ul>						
 					</nav>
 				</div>
 				<div className='border-t flex p-3'>
-					<Image src={avatar} alt="avatar" width={50} />
+					<img src="/public/avatarH5.png" alt="avatar" width={50} />
 					<div className={`
                     flex justify-between items-center overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}
                 `}>

@@ -1,14 +1,15 @@
 'use client'
-import axios from "axios"
 import { createContext, useState, useCallback, useContext, useEffect } from "react"
+import axios from "axios"
 
 export const UbicacionsContext = createContext()
 
 export const useUbicacions = () => {
     return useContext(UbicacionsContext)
 }
+
 export const UbicacionsContextProvider = (props) => {
-    const [ubicacions, setUbicacions] = useState([]) //MODIFICAERRRRRRRR
+    const [ubicacions, setUbicacions] = useState([]) 
     const [ubicacion, setUbicacion] = useState(null)
 
     const loadUbicacions = useCallback(async (database) => {

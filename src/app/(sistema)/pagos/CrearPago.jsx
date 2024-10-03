@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react"
-import { usePagos } from "./ContextPago"
+// import { usePagos } from "./ContextPago"
 import { useAuth } from "@/components/AuthContext"
+import { TreePineIcon, TrophyIcon } from "lucide-react"
+import { useProyectos } from "../proyectos/ContextProyecto"
 
 export default function CrearPago({ proyecto, setaddPago }) {
 
     const {user} = useAuth()
     const [database , setDatabase] = useState("")
 
-    const { crearPago } = usePagos()
+    const { crearPago } = useProyectos()
     const [guardando, setGuardando] = useState(false)
     const [fecha, setFecha] = useState(new Date())
     const [importe, setImporte] = useState(0)
@@ -25,7 +27,7 @@ export default function CrearPago({ proyecto, setaddPago }) {
             cliente: proyecto.cliente,
             proyecto: proyecto._id,
             fecha: fecha,
-            tipoPago: tipoPago,
+            tipo: tipoPago,
             importe: importe
         }
         await crearPago(database, newPago).then(() => {
@@ -54,6 +56,7 @@ export default function CrearPago({ proyecto, setaddPago }) {
                             value={tipoPago}
                             onChange={(e) => setTipopago(e.target.value)}
                         >
+                            <option value=""></option>
                             <option value="EFECTIVO">EFECTIVO</option>
                             <option value="DEPOSITO">DEPOSITO</option>
                             <option value="TRANSFERENCIA">TRANSFERENCIA</option>

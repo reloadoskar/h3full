@@ -1,12 +1,13 @@
 'use client'
-import React, { useState, useEffect } from 'react'
-import Switch from '@/components/Switch'
+import { useState, useEffect } from 'react'
 import { Search, X } from 'lucide-react'
 import CrearStaff from './CrearStaff'
 import Staff from './Staff'
 import { useStaff } from './StaffContext'
 import { useAuth } from '@/components/AuthContext'
 import { nombreDelDiaSegunFecha } from '@/utils/tools'
+import EquipoDeHoy from './EquipoDeHoy'
+
 export default function Page() {
   const { user } = useAuth()
   const hoy = nombreDelDiaSegunFecha(new Date())
@@ -51,23 +52,7 @@ export default function Page() {
 
       <section className='tabsection'>
         {activeTab === 0 &&
-          <div className=''>
-            <h2 className='titulo'>El Equipo de hoy</h2>
-            <div className=''>
-              <ul className='flex gap-4 justify-center'>
-                {staff.filter(m => m.dias.find(e => e === hoy)).map(mmbr => (
-                  <li key={mmbr._id}>
-                    <div className='flex flex-col'>
-                      <img className='mx-auto w-24 rounded-full object-cover aspect-square' src={mmbr.avatar} />
-                      <div>
-                        {mmbr.nombre}
-                      </div>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
+          <EquipoDeHoy staff={staff} />
         }
         {activeTab === 1 &&
           <div className='flex flex-col gap-2'>
@@ -111,9 +96,6 @@ export default function Page() {
           </div>
         }
       </section>
-
-
-
     </div>
   )
 }

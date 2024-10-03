@@ -6,6 +6,7 @@ var PagoSchema = Schema({
     cliente: String,
     ubicacion: {type: Schema.ObjectId, ref: 'Ubicacion'},
     credito:{type: Schema.ObjectId, ref: 'Credito'},
+    tipo: String,
     importe: Number
 },{
     timestamps: true

@@ -14,6 +14,10 @@ const roboto = Roboto({
   subsets: ["latin"]
 })
 
+import moment from 'moment'
+
+moment.locale('es')
+
 export default function RootLayout({ children }) {
   return (
     <html lang="es">

@@ -10,28 +10,23 @@ const pbase = {
     fecha: "",
     nombre: "",
     descripcion: "",
-    presupuesto: 0
+    presupuesto: 0,
+    fechae: ""
 }
 
 export default function CrearProyecto({ estilo }) {
-    const {user} = useAuth()
-    const [database , setDatabase] = useState("")
-
+    const { user } = useAuth()
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { clientes, loadClientes } = useClientes()
     const { crearProyecto } = useProyectos()
-
     const [newProyecto, setNewproyecto] = useState(pbase)
 
     useEffect(() => {
         if (user) {
-            setDatabase(user.database)
+            loadClientes(user.database)
         }
     }, [user])
 
-    if (clientes.length === 0) {
-        loadClientes(database)
-    }
     const handleOpenModal = () => {
         setIsModalOpen(true);
     }
@@ -40,14 +35,7 @@ export default function CrearProyecto({ estilo }) {
     }
     const handleSubmit = (e) => {
         e.preventDefault()
-        const formData = new FormData();
-        formData.set('database', database);
-        formData.set('cliente', newProyecto.cliente);
-        formData.set('nombre', newProyecto.nombre);
-        formData.set('descripcion', newProyecto.descripcion);
-        formData.set('presupuesto', newProyecto.presupuesto);
-
-        crearProyecto(formData).then(res => {
+        crearProyecto(user.database, newProyecto).then(() => {
             setNewproyecto(pbase)
             handleCloseModal()
         }).catch(err => {
@@ -64,47 +52,61 @@ export default function CrearProyecto({ estilo }) {
                 }
             </div>
 
-            <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-                <h2 className="titulo">Nuevo Proyecto</h2>
-                <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
-                    <label>Selecciona cliente</label>
-                    <select name="cliente"
-                        className="inputbasico"
-                        required
-                        onChange={(e) => setNewproyecto({ ...newProyecto, cliente: e.target.value })}
-                    >
-                        <option value="NUEVO CLIENTE">Nuevo Cliente</option>
-                        {clientes.map(cliente => (
-                            <option key={cliente._id} value={cliente.nombre}>{cliente.nombre}</option>
-                        ))}
-                    </select>
-                    <label>Nombre del proyecto</label>
-                    <input name="nombre"
-                        className="inputbasico"
-                        type="text"
-                        required
-                        onChange={(e) => setNewproyecto({ ...newProyecto, nombre: e.target.value })}
-                    />
-                    <label>Descripción</label>
-                    <textarea name="descripcion"
-                        rows={4}
-                        className="inputbasico"
-                        required
-                        onChange={(e) => setNewproyecto({ ...newProyecto, descripcion: e.target.value })}
-                    />
-                    <label htmlFor="presupuesto">Presupuesto</label>
-                    <input id="presupuesto"
-                        name="presupuesto"
-                        type="number"
-                        className="inputbasico"
-                        required
-                        onChange={(e) => setNewproyecto({ ...newProyecto, presupuesto: e.target.value })}
-                    />
-                    <div className="flex gap-4 justify-end">
-                        <button type="button" className="botonrojo" onClick={handleCloseModal}>Cancelar</button>
-                        <button type="submit" className="botonverde">Crear Proyecto</button>
-                    </div>
-                </form>
+            <Modal isOpen={isModalOpen} onClose={handleCloseModal} >
+                <div className="px-4">
+                    <h2 className="titulo">Nuevo Proyecto</h2>
+                    <form className="flex flex-col gap-2 overflow-auto" onSubmit={handleSubmit}>
+                        <label>Selecciona cliente</label>
+                        <select name="cliente"
+                            className="inputbasico"
+                            required
+                            value={newProyecto.cliente}
+                            onChange={(e) => setNewproyecto({ ...newProyecto, cliente: e.target.value })}
+                        >
+                            <option value="NUEVO CLIENTE">Nuevo Cliente</option>
+                            {clientes.map(cliente => (
+                                <option key={cliente._id} value={cliente.nombre}>{cliente.nombre}</option>
+                            ))}
+                        </select>
+                        <label>Nombre del proyecto</label>
+                        <input name="nombre"
+                            className="inputbasico"
+                            type="text"
+                            required
+                            value={newProyecto.nombre}
+                            onChange={(e) => setNewproyecto({ ...newProyecto, nombre: e.target.value })}
+                        />
+                        <label>Descripción</label>
+                        <textarea name="descripcion"
+                            rows={4}
+                            className="inputbasico"
+                            required
+                            value={newProyecto.descripcion}
+                            onChange={(e) => setNewproyecto({ ...newProyecto, descripcion: e.target.value })}
+                        />
+                        <label htmlFor="presupuesto">Presupuesto</label>
+                        <input id="presupuesto"
+                            name="presupuesto"
+                            type="number"
+                            className="inputbasico"
+                            required
+                            value={newProyecto.presupuesto}
+                            onChange={(e) => setNewproyecto({ ...newProyecto, presupuesto: e.target.value })}
+                        />
+                        <label htmlFor="fechae">Fecha de entrega estimada</label>
+                        <input id="fechae"
+                            className="inputbasico"
+                            type="date"
+                            value={newProyecto.fechae}
+                            required
+                            onChange={(e) => setNewproyecto({ ...newProyecto, fechae: e.target.value })}
+                        />
+                        <div className="flex gap-4 justify-end">
+                            <button type="button" className="botonrojo" onClick={handleCloseModal}>Cancelar</button>
+                            <button type="submit" className="botonverde">Crear Proyecto</button>
+                        </div>
+                    </form>
+                </div>
             </Modal>
         </div>
     )

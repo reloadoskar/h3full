@@ -1,5 +1,6 @@
 'use client'
 import { createContext, useState, useCallback, useContext, useEffect } from "react"
+import axios from "axios"
 
 export const PedidosContext = createContext()
 
@@ -14,24 +15,16 @@ export const PedidosContextProvider = (props) => {
 
     const loadPedidos = useCallback(async (database) => {
         if (database) {
-            const response = await fetch("/api/pedidos", {
-                method: 'POST',
-                body: JSON.stringify({ database: database }),
-            })
-            const data = await response.json()
-            setPedidos(data.pedidos)
+            const response = await axios.post("/api/pedidos", {database: database })
+            setPedidos(response.data.pedidos)
             return response;
         }
     }, [])
 
     const crearPedido = async (database, pedido) => {
         if (database) {
-            const res = await fetch("/api/pedido", {
-                method: 'POST',
-                body: JSON.stringify({ database, pedido }),
-            })
-            const data = await res.json()
-            setPedidos([data.pedido, ...pedidos])
+            const res = await axios.post("/api/pedido", { database, pedido })            
+            setPedidos([res.data.pedido, ...pedidos])
             return res
         }
     }
@@ -42,15 +35,10 @@ export const PedidosContextProvider = (props) => {
 
     const editarPedido = async (data) => {
         if (data) {
-            const res = await fetch("/api/pedido", {
-                method: 'PUT',
-                body: JSON.stringify(data)
-            })
-            const dt = await res.json()
-            let pedidoSinOriginal = pedidos.filter(rsrv => rsrv._id !== data._id)
-            pedidoSinOriginal.push(dt.pedido)
-            setPedidos(pedidoSinOriginal)
-            return dt
+            const res = await axios.put("/api/pedido", {data})
+            let pedidoSinOriginal = pedidos.filter(rsrv => rsrv._id !== data._id)            
+            setPedidos([res.data.pedido, pedidoSinOriginal])
+            return res
         }
     }
 
@@ -76,7 +64,6 @@ export const PedidosContextProvider = (props) => {
     }
 
     const ordenarPorFecha = () => {
-        
         let s = pedidos.sort(sortArray)
         return setPedidos(s)
     }

@@ -1,6 +1,6 @@
 'use client'
-import axios from "axios"
 import { createContext, useState, useCallback, useContext, } from "react"
+import axios from "axios"
 
 export const ClientesContext = createContext()
 
@@ -18,7 +18,7 @@ export const ClientesContextProvider = (props) => {
             const response = await axios.post("/api/cliente/s", { database })
             setClientes(response.data.clientes)
             setBusqueda(response.data.clientes)
-            return response;
+            return response.data.clientes;
         }
     }, [])
 

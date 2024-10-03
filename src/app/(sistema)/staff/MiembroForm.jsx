@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react"
 import { useStaff } from "./StaffContext"
+import { comprimirImagen } from "@/utils/tools"
 
 export default function MiembroForm({ user, action, close, prevStaff = null }) {
     const { puestos } = useStaff()
@@ -13,6 +14,7 @@ export default function MiembroForm({ user, action, close, prevStaff = null }) {
         hasta: ""
     })
     const [selectedFiles, setSelectedFiles] = useState([])
+    const [url, setUrl] = useState("")
 
     const handleClose = () => {
         setNewstaff({ nombre: "", puesto: "", email: "", telefono: "", sueldo: "", periodo: "", dias: [], desde: "", hasta: "" })
@@ -72,12 +74,14 @@ export default function MiembroForm({ user, action, close, prevStaff = null }) {
         setNewstaff({ ...newStaff, dias: value });
     }
 
-    const handleFileChange = (event) => {
+    const handleFileChange = async (event) => {
         const fileList = event.target.files;
         const filesArray = Array.from(fileList);
         // console.log(filesArray)
+        const blob = await comprimirImagen(filesArray[0], parseInt(30));
+        setUrl(URL.createObjectURL(blob))
         setSelectedFiles(filesArray);
-        setNewstaff({ ...newStaff, avatar: filesArray[0], file: filesArray[0] })
+        setNewstaff({ ...newStaff, avatar: blob, file: blob })
     }
 
     return !guardando ?
@@ -87,7 +91,7 @@ export default function MiembroForm({ user, action, close, prevStaff = null }) {
                 {selectedFiles.map((file, index) => (
                     <div key={index}>
                         {/* <h4>{file.name}</h4> */}
-                        <img src={URL.createObjectURL(file)} alt={file.name} style={{ maxWidth: '150px', maxHeight: '150px' }} className="mx-auto object-cover aspect-square rounded-full" />
+                        <img src={url} alt={file.name} style={{ maxWidth: '150px', maxHeight: '150px' }} className="mx-auto object-cover aspect-square rounded-full" />
                     </div>
                 ))}
                 <input name="file"

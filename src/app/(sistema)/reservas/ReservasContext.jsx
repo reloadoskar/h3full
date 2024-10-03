@@ -1,5 +1,6 @@
 'use client'
 import { createContext, useState, useCallback, useContext, useEffect } from "react"
+import axios from "axios"
 
 export const ReservasContext = createContext()
 
@@ -14,24 +15,16 @@ export const ReservasContextProvider = (props) => {
 
     const loadReservas = useCallback(async (database) => {
         if (database) {
-            const response = await fetch("/api/reservas", {
-                method: 'POST',
-                body: JSON.stringify({ database: database }),
-            })
-            const data = await response.json()
-            setReservas(data.reservas)
+            const response = await axios.post("/api/reservas", {database: database })
+            setReservas(response.data.reservas)
             return response;
         }
     }, [])
 
     const crearReserva = async (database, reserva) => {
         if (database) {
-            const res = await fetch("/api/reserva", {
-                method: 'POST',
-                body: JSON.stringify({ database, reserva }),
-            })
-            const data = await res.json()
-            setReservas([data.reserva, ...reservas])
+            const res = await axios.post("/api/reserva", { database, reserva })
+            setReservas([res.data.reserva, ...reservas])
             return res
         }
     }
@@ -42,15 +35,10 @@ export const ReservasContextProvider = (props) => {
 
     const editarReserva = async (data) => {
         if (data) {
-            const res = await fetch("/api/reserva", {
-                method: 'PUT',
-                body: JSON.stringify(data)
-            })
-            const dt = await res.json()
-            let reservaSinOriginal = reservas.filter(rsrv => rsrv._id !== data._id)
-            reservaSinOriginal.push(dt.reserva)
-            setReservas(reservaSinOriginal)
-            return dt
+            const res = await axios.put("/api/reserva", {data})
+            let reservaSinOriginal = reservas.filter(rsrv => rsrv._id !== data._id)            
+            setReservas([res.data.reserva, reservaSinOriginal])
+            return res
         }
     }
 

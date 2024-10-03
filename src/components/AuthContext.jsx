@@ -39,8 +39,10 @@ function useProvideAuth() {
         return false
     }
 
-    const logout = (cb) => {
-        localStorage.removeItem('usertoken')
+    const logout = async (cb) => {
+        // localStorage.removeItem('usertoken')
+        const res = await axios.delete("api/auth")
+        // console.log(res)
         setAutenticado(false)
         setToken(null)
         setUser(null)

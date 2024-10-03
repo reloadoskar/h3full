@@ -15,13 +15,9 @@ export const GastoContextProvider = (props) => {
 
     const loadGastos = useCallback(async (database) => {
         if (database) {
-            const response = await fetch("/api/gastos/load", {
-                method: 'POST',
-                body:  JSON.stringify({database: database}) ,
-            })
-            const data = await response.json()
-            setGastos(data.gastos)
-            return response;
+            const response = await axios.post("/api/gastos/load", { database })
+            setGastos(response.data.gastos)
+            return response.data.gastos;
         }
     }, [])
 
@@ -34,39 +30,25 @@ export const GastoContextProvider = (props) => {
     }
 
     const editarGasto = async (data) => {
-        if(data){
-            const res = await fetch("/api/gastos",{
-                method:'PUT',
-                body: JSON.stringify(data)
-            })
-            const dt = await res.json()
-            // console.log(dt)
-            let gastosSinOriginal = gastos.filter(plt=>plt._id!==data._id)
-            gastosSinOriginal.push(dt.gasto)
-            setGastos(gastosSinOriginal)
-            return dt
+        if (data) {
+            const res = await axios.put("/api/gastos", { data })
+            let gastosSO = gastos.filter(plt => plt._id !== data._id)
+            setGastos(res.data.gasto, ...gastosSO)
+            return res
         }
     }
 
-    const eliminarGasto = async (database, gasto) =>{
-        if(database){
-            const res = await fetch("/api/gastos",{
-                method: 'DELETE',
-                body: JSON.stringify({database, gasto})
-            })
-            const dt = await res.json()
-            if(dt){
-                setGastos(gastos.filter(plt=>plt._id !== plato._id))
-            }
-            return dt
-        }
+    const eliminarGasto = async (database, gasto) => {
+        const res = await axios.delete("/api/gastos", { database, gasto })
+        setGastos(gastos.filter(plt => plt._id !== gasto._id))
+        return res
     }
 
-    const selectGasto = (pryct) =>{
+    const selectGasto = (pryct) => {
         setGastosel(pryct)
     }
 
-    const buscarGasto = (buscarPor="nombre", busqueda) => {
+    const buscarGasto = (buscarPor = "nombre", busqueda) => {
         let founded = gastos.filter(r => r[buscarPor].toLowerCase().includes(busqueda.toLowerCase()))
         // console.log(founded)
         setGastosFounded(founded)
@@ -77,7 +59,7 @@ export const GastoContextProvider = (props) => {
         <GastoContext.Provider value={{
             gastos, setGastos,
             loadGastos, crearGasto, selectGasto, gastoSeleccionado,
-            editarGasto, eliminarGasto, buscarGasto, busqueda, setBusqueda, buscarPor, setBuscarpor, 
+            editarGasto, eliminarGasto, buscarGasto, busqueda, setBusqueda, buscarPor, setBuscarpor,
             gastosFounded
         }}>
             {props.children}

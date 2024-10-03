@@ -3,6 +3,7 @@ import { dbConnect } from "@/utils/conection"
 import Staff from "@/models/staff"
 import { writeFile } from "fs/promises";
 import path from 'path';
+import mongoose from "mongoose";
 
 export const guardaImagenYCreaObjetoStaff = async data => {
     const dias = JSON.parse(data.get("dias"))
@@ -10,16 +11,18 @@ export const guardaImagenYCreaObjetoStaff = async data => {
         let pathfile = "/images/avatarH5.png" // Imagen por default
         
         if (file!== "undefined") {         
+            const nomArchivo = data.get("nombre")
+                  nomArchivo.replace(/\s+/g, '')
             const bytes = await file.arrayBuffer()
             const buffer = Buffer.from(bytes)
-            const filepath = path.join(process.cwd(), "public/images", file.name)
+            const filepath = path.join(process.cwd(), "public/avatars", nomArchivo)
             writeFile(filepath, buffer)
             console.log("Imagen guardada en: ", filepath)
-            pathfile = "/images/"+file.name
+            pathfile = "/avatars/"+nomArchivo
         }
 
         const staffInfo = {
-            _id: data.get('_id') || "",
+            _id: data.get('_id') || new mongoose.Types.ObjectId(),
             nombre: data.get('nombre'),
             puesto: data.get('puesto'),
             email: data.get('email'),

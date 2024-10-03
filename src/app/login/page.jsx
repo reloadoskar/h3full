@@ -1,10 +1,7 @@
 "use client";
-
-import { useAuth } from "@/components/AuthContext";
 import { useEffect, useState } from "react";
+import { useAuth } from "@/components/AuthContext";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
-import Logo from '@/images/logob_h_sola_180.svg'
 export default function Login() {
   const [newUser, setNewUser] = useState({
     nombre: "",
@@ -56,7 +53,7 @@ export default function Login() {
     <div className="min-h-[calc(100vh-8rem)] flex justify-center items-center">
       <form onSubmit={handleSubmit} className="form">
         <header className="flex justify-between">
-          <Image priority={false} alt="logo hadria" src={Logo} width={100} className="aspect-square mx-auto inset-x-0" />
+          <img alt="logo hadria" src="/logoHadria3800x800.png" width={200} className="aspect-square mx-auto inset-x-0 dark:invert" />
         </header>
         {isSubmitting ?
           <h3 className="mx-auto text-center font-bold text-xl">Conectando...</h3>

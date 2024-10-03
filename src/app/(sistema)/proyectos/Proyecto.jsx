@@ -1,35 +1,22 @@
 import { useEffect, useState } from "react"
 import CrearPago from "../pagos/CrearPago"
 import CrearGasto from "../gastos/CrearGasto"
-import { usePagos } from "../pagos/ContextPago"
-import { useGastos } from "../gastos/ContextGasto"
 import { numeroFormateado } from "@/utils/tools"
+import { useProyectos } from "./ContextProyecto"
 
-export default function Proyecto({ proyecto }) {
+export default function Proyecto({  }) {
+    const {proyectoSeleccionado: proyecto} = useProyectos()
     const [addPago, setaddPago] = useState(false)
     const [addGasto, setaddGasto] = useState(false)
-    const { pagos, setPagos } = usePagos()
-    const { gastos, setGastos } = useGastos()
-
     const [activeTab, setActivetab] = useState(0)
-
     const [tpagos, setTpagos] = useState(0)
     const [tgastos, setTgastos] = useState(0)
 
     useEffect(() => {
-        if (proyecto) {
-            setPagos(proyecto.pagos)
-            setGastos(proyecto.gastos)
-        }
+        setTpagos(proyecto.pagos.reduce((ttl, pg) => ttl += pg.importe, 0))
+        setTgastos(proyecto.gastos.reduce((ttl, gs) => ttl += gs.importe, 0))
     }, [proyecto])
 
-    useEffect(() => {
-        setTpagos(pagos.reduce((ttl, pg) => ttl += pg.importe, 0))
-    }, [pagos])
-
-    useEffect(() => {
-        setTgastos(gastos.reduce((ttl, gs) => ttl += gs.importe, 0))
-    }, [gastos])
     return (
         <div key={proyecto._id} className="flex flex-col">
 
@@ -58,11 +45,11 @@ export default function Proyecto({ proyecto }) {
                                 {proyecto.descripcion}
                             </div>
                             <div className="flex">
-                                <p className="basis-1/2">Presupuesto:</p>
-                                <div className="basis-1/2 text-right">${numeroFormateado(proyecto.presupuesto)}</div>
+                                <p className="basis-3/4 text-right">Presupuesto:</p>
+                                <div className="basis-1/4 text-right">${numeroFormateado(proyecto.presupuesto)}</div>
                             </div>
                             <div className="flex">
-                                <div className="basis-3/4">
+                                <div className="basis-3/4 text-right">
                                     pagos: ({proyecto.pagos.length}):
                                 </div>
                                 <div className="basis-1/4 text-right">
@@ -71,7 +58,7 @@ export default function Proyecto({ proyecto }) {
 
                             </div>
                             <div className="flex">
-                                <div className="basis-3/4">
+                                <div className="basis-3/4 text-right">
                                     Saldo:
                                 </div>
                                 <div className="basis-1/4 text-right border-t border-gray-600">
@@ -79,7 +66,7 @@ export default function Proyecto({ proyecto }) {
                                 </div>
                             </div>
                             <div className="flex">
-                                <div className="basis-3/4">
+                                <div className="basis-3/4 text-right">
                                     Gastos:
                                 </div>
                                 <div className="basis-1/4 text-right">
@@ -87,7 +74,7 @@ export default function Proyecto({ proyecto }) {
                                 </div>
                             </div>
                             <div className="flex">
-                                <div className="basis-3/4">
+                                <div className="basis-3/4 text-right">
                                     Utilidad:
                                 </div>
                                 <div className="basis-1/4 text-right">
@@ -100,10 +87,11 @@ export default function Proyecto({ proyecto }) {
 
                     {activeTab === 1 &&
                         <div className="flex flex-col gap-2">
-                            {pagos.length > 0 ?
-                                pagos.map(pago => (
+                            {proyecto.pagos.length > 0 ?
+                                proyecto.pagos.map(pago => (
                                     <div className="flex gap-2 w-full dark:odd:bg-gray-600 odd:bg-gray-300" key={pago._id}>
-                                        <div className="basis-3/4" >{pago.fecha} </div>
+                                        <div className="basis-2/4" >{pago.fecha} </div>
+                                        <div className="basis-1/4" >{pago.tipo} </div>
                                         <div className="basis-1/4 text-right">{numeroFormateado(pago.importe)}</div>
                                     </div>
                                 ))
@@ -127,8 +115,8 @@ export default function Proyecto({ proyecto }) {
 
                     {activeTab === 2 &&
                         <div className="flex flex-col gap-2">
-                            {gastos.length > 0 ?
-                                gastos.map(gasto => (
+                            {proyecto.gastos.length > 0 ?
+                                proyecto.gastos.map(gasto => (
                                     <div className="flex gap-2 w-full dark:odd:bg-gray-600 odd:bg-gray-300" key={gasto._id}>
                                         <div className="basis-1/4" >{gasto.fecha} </div>
                                         <div className="basis-2/4" >{gasto.descripcion} </div>
@@ -154,20 +142,7 @@ export default function Proyecto({ proyecto }) {
                         // <button className="boton" onClick={() => setaddGasto(true)}>agregar gasto</button>
                     }
                 </section>
-
-
-
-
             </div>
-
-            <div className="flex gap-4 relative">
-                {addGasto ?
-                    <CrearGasto proyecto={proyecto} setaddGasto={setaddGasto} />
-                    : null
-                }
-            </div>
-
-
         </div>
     )
 }

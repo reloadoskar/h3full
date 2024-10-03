@@ -4,7 +4,7 @@ import Staff from "@/models/staff"
 
 export async function POST(request){
     const data = await request.json()
-    // console.log(data)
+    console.log(data)
     if(!data.database){
         return NextResponse.json({message:"Datos incompletos"}, {status:400})
     }

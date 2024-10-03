@@ -56,3 +56,8 @@ export async function POST(request) {
         return NextResponse.json(error.message, { status: 500 })
     }
 }
+
+export async function DELETE(data){
+    cookies().delete('usertoken')
+    return NextResponse.json({message:"Cookie eliminada", status:"success"},{status:200})
+}

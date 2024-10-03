@@ -10,6 +10,7 @@ var ProyectoSchema = Schema({
     limite_inferior: {type: Number, default: 0},
     pagos: [{type: Schema.ObjectId, ref: 'Pago' }],
     gastos: [{type: Schema.ObjectId, ref: 'Gasto'}],
+    fechae: String,
     saldo: Number
 },{
     timestamps: true

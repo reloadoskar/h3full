@@ -1,7 +1,9 @@
-import React from 'react'
+import SeccionSuperior from "./SeccionSuperior";
 
-export default function Dashboard() {
+export default function Page() {
   return (
-    <div>Dashboard</div>
+    <div className="flex flex-col">
+      <SeccionSuperior />  
+    </div>
   )
 }

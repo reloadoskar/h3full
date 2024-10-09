@@ -23,12 +23,12 @@ export default async function Layout({ children }) {
 
     return (
       <SettingsContextProvider>
-        <ReservasContextProvider>
-          <PedidosContextProvider>
-            <StaffContextProvider>
-              <MenuContextProvider>
-                <ProyectoContextProvider>
-                  <ClientesContextProvider>
+        <ClientesContextProvider>
+          <ProyectoContextProvider>
+            <ReservasContextProvider>
+              <PedidosContextProvider>
+                <StaffContextProvider>
+                  <MenuContextProvider>
                     <PagoContextProvider>
                       <GastoContextProvider>
                         <UbicacionsContextProvider>
@@ -38,12 +38,12 @@ export default async function Layout({ children }) {
                         </UbicacionsContextProvider>
                       </GastoContextProvider>
                     </PagoContextProvider>
-                  </ClientesContextProvider>
-                </ProyectoContextProvider>
-              </MenuContextProvider>
-            </StaffContextProvider>
-          </PedidosContextProvider>
-        </ReservasContextProvider>
+                  </MenuContextProvider>
+                </StaffContextProvider>
+              </PedidosContextProvider>
+            </ReservasContextProvider>
+          </ProyectoContextProvider>
+        </ClientesContextProvider>
       </SettingsContextProvider>
     )
   } catch (error) {

@@ -10,7 +10,7 @@ export default function SeccionSuperior() {
   const { settings } = useSettings()
   const { staff } = useStaff()
   return !settings ? null :
-    <div className="pt-6 gap-2">
+    <div className="md:pt-6 gap-2 pt-8 ">
       {settings.secciones.find(sec => sec === "staff") ?
         <EquipoDeHoy staff={staff} />
         : null

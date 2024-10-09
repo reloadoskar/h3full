@@ -26,10 +26,10 @@ export default function HfullContenedor({ payload, children }) {
         if (user) {
             const loadAll = async () => {
                 const res = await Promise.all([
-                    loadProyectos(user.database),
                     loadSettings(user.database),
-                    loadUbicacions(user.database),
                     loadClientes(user.database),
+                    loadProyectos(user.database),
+                    loadUbicacions(user.database),
                     loadPagos(user.database)
                 ])
                 return res
@@ -40,7 +40,7 @@ export default function HfullContenedor({ payload, children }) {
     return (
         <div className="flex flex-col" >
             <Navigation payload={payload} />
-            <div className="pl-12 pr-6">
+            <div className="md:pl-12 md:pr-6 pl-2 pr-2">
                 {children}
             </div>
         </div>

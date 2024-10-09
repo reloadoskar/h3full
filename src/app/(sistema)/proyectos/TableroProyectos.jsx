@@ -17,7 +17,7 @@ export default function TableroProyectos() {
 				// console.log(pbar)
 				return (
 					<div key={proyecto._id} className='px-4 flex gap-4'>
-						<div className='basis-2/6'>{proyecto.cliente}</div>
+						<div className='basis-2/6'>{proyecto.cliente.nombre}</div>
 						<div className='basis-auto w-full'><ProgressBar value={pbar} /></div>
 						<div className='basis-2/6'>{dias_que_quedan} dias para entregar</div>
 					</div>

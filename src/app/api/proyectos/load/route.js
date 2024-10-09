@@ -11,7 +11,7 @@ export async function POST(request){
     }
     try {
         await dbConnect(data.database)        
-        let proyectos = await Proyecto.find().populate('pagos').populate('gastos').lean()
+        let proyectos = await Proyecto.find().populate('pagos').populate('gastos').populate('cliente').lean()
         if(!proyectos) return NextResponse.json({message:"No se encontraron proyectos"}, {status:401})
         return NextResponse.json({message:"Se encontraron proyectos",proyectos: proyectos}, {status:200})
     } catch (error) {

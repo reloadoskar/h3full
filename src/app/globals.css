@@ -38,6 +38,10 @@
         @apply text-2xl font-bold mb-6;
     }
 
+    .subtitulo {
+        @apply text-xl font-semibold mb-2
+    }
+
     .inputbasico {
         @apply bg-gray-200 dark:bg-gray-800 border border-gray-500 w-full p-3 rounded-lg mb-4 mt-0;
     }

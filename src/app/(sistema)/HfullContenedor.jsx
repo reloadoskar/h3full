@@ -6,6 +6,7 @@ import { useProyectos } from "./proyectos/ContextProyecto";
 import { useSettings } from "./settings/settingsContext";
 import { useUbicacions } from "./ubicaciones/UbicacionsContext";
 import { useClientes } from "./clientes/ClientesContext";
+import { usePagos } from "./pagos/ContextPago";
 
 export default function HfullContenedor({ payload, children }) {
     const { user, setUser, setAutenticado } = useAuth()
@@ -13,6 +14,7 @@ export default function HfullContenedor({ payload, children }) {
     const { loadSettings } = useSettings()
     const {loadUbicacions} = useUbicacions()
     const {loadClientes} = useClientes()
+    const {loadPagos} = usePagos()
     useEffect(() => {
         if (payload) {
             setUser(payload)
@@ -27,7 +29,8 @@ export default function HfullContenedor({ payload, children }) {
                     loadProyectos(user.database),
                     loadSettings(user.database),
                     loadUbicacions(user.database),
-                    loadClientes(user.database)
+                    loadClientes(user.database),
+                    loadPagos(user.database)
                 ])
                 return res
             }

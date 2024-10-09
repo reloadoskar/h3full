@@ -33,7 +33,7 @@ export default function ListaProyectos({ proyectos }) {
             {proyectos.map(proyecto => (
                 <div key={proyecto._id} className="flex md:flex-row flex-col px-4 md:px-2 md:pt-0 pt-4 cursor-pointer dark:hover:bg-gray-700 hover:bg-gray-400 odd:bg-gray-200 dark:odd:bg-gray-600" onClick={() => handleClick(proyecto)}>
                     <div className="basis-2/12 text-right md:text-left">{moment(proyecto.createdAt).format("DD-MM-YYYY")}</div>
-                    <div className="basis-4/12 text-xl font-medium md:text-base md:font-normal">{proyecto.cliente}</div>
+                    <div className="basis-4/12 text-xl font-medium md:text-base md:font-normal">{proyecto.cliente.nombre}</div>
                     <div className="basis-3/12">{proyecto.nombre}</div>
                     <div className="md:hidden">{proyecto.descripcion}</div>
                     <div className="md:basis-1/12 basis-full text-right ">

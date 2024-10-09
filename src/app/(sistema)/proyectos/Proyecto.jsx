@@ -38,7 +38,7 @@ export default function Proyecto({  }) {
                         <div>
                             <div className="flex flex-col basis-1/4">
                                 <div className="titulo py-0 -my-2">{proyecto.nombre}</div>
-                                <div className="font-bold text-sm">{proyecto.cliente}</div>
+                                <div className="font-bold text-sm">{proyecto.cliente.nombre}</div>
                             </div>
 
                             <div className="flex p-2 my-2 border border-gray-600 rounded-lg" >

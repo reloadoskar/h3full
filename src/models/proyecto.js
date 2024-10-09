@@ -2,7 +2,7 @@ import mongoose, { Schema, model } from "mongoose";
 
 var ProyectoSchema = Schema({
     fecha: String,
-    cliente: String,   
+    cliente: {type: Schema.ObjectId, ref:'Cliente'},   
     nombre: String,
     descripcion: String,    
     presupuesto: {type: Number, default: 0},

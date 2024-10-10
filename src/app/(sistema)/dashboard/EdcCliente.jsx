@@ -4,7 +4,9 @@ import { numeroFormateado } from "@/utils/tools";
 export default function EdcCliente({ edc }) {
     const [mostrarPagos, setMostrarPagos] = useState(false)
     return edc.presupuesto > 0 ?
-        <div className="flex flex-col odd:bg-gray-600 px-4">
+    <div className="flex flex-col">
+
+        <div className="flex flex-col odd:bg-gray-600 px-4 ">
             <div key={edc.cliente._id} className="flex gap-2 cursor-pointer" onClick={() => setMostrarPagos(!mostrarPagos)}>
                 <div className="basis-8/12 text-nowrap ">{edc.cliente.nombre}</div>
                 <div className="basis-1/12 text-right">{numeroFormateado(edc.presupuesto)}</div>
@@ -23,11 +25,11 @@ export default function EdcCliente({ edc }) {
                     ))}
                     <div className="flex gap-2 px-2 bg-gray-700">
                         <div className="basis-2/3 text-right">Total:</div>
-                        <div className="basis-1/3 text-right">{ numeroFormateado(edc.totalPagos)}</div>
+                        <div className="basis-1/3 text-right">{numeroFormateado(edc.totalPagos)}</div>
                     </div>
                 </div>
                 : null}
-
         </div>
+    </div>
         : null
 }

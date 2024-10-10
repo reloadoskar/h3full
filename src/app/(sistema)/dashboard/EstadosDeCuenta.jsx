@@ -29,7 +29,7 @@ export default function EstadoDeCuenta() {
 
     return estadoDeCuenta.length > 0 ?
         <div className="p-2 my-2 md:my-4 md:p-6 border-gray-700 border-2  ">
-            <div className="flex flex-col overflow-x-scroll ">
+            <div className="flex flex-col">
                 <h1 className="titulo">Estados de Cuenta</h1>
                 <div className="flex gap-2 bg-gray-800 px-4 flex-nowrap">
                     <div className="basis-8/12">Cliente</div>

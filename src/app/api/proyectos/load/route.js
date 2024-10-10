@@ -3,6 +3,7 @@ import { dbConnect } from "@/utils/conection"
 import Proyecto from "@/models/proyecto"
 import Pago from "@/models/pago";
 import Gasto from "@/models/gasto"
+import Cliente from "@/models/cliente"
 
 export async function POST(request){
     const data = await request.json()

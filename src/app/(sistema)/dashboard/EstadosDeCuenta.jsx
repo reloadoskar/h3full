@@ -13,7 +13,7 @@ export default function EstadoDeCuenta() {
     
 
     useEffect(() => {
-        if (clientes.length > 0) {
+        if (clientes.length > 0 && proyectos.length > 0) {
             let clientesPrycts = []
             clientes.forEach(cliente => {
                 let proyectosCliente = proyectos.filter(pr => pr.cliente._id === cliente._id)

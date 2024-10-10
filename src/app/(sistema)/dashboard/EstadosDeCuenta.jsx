@@ -31,20 +31,20 @@ export default function EstadoDeCuenta() {
         <div className="p-2 my-2 md:my-4 md:p-6 border-gray-700 border-2  ">
             <div className="flex flex-col">
                 <h1 className="titulo">Estados de Cuenta</h1>
-                <div className="flex gap-2 bg-gray-800 px-4 flex-nowrap">
-                    <div className="basis-8/12">Cliente</div>
-                    <div className="basis-auto text-right">Presupuesto</div>
-                    <div className="basis-auto text-right">Pagos</div>
-                    <div className="basis-auto text-right">Saldo</div>
+                <div className="flex gap-2 bg-gray-800 px-4">
+                    <div className="basis-1/4">Cliente</div>
+                    <div className="basis-1/4 text-right">Presupuesto</div>
+                    <div className="basis-1/4 text-right">Pagos</div>
+                    <div className="basis-1/4 text-right">Saldo</div>
                 </div>
                 {estadoDeCuenta.sort((a,b)=> new Date(a.fecha) - new Date(b.fecha) ).map(edc => (
                     <EdcCliente edc={edc} key={edc.cliente._id} />                    
                 ))}
                 <div className="flex gap-2 px-4 bg-gray-800 ">
-                    <div className="basis-8/12 text-right">Totales:</div>
-                    <div className="basis-auto text-right">{numeroFormateado(estadoDeCuenta.reduce((ttl,cl)=>ttl+=cl.presupuesto,0))}</div>
-                    <div className="basis-auto text-right">{numeroFormateado(estadoDeCuenta.reduce((ttl,cl)=>ttl+=cl.totalPagos,0))}</div>
-                    <div className="basis-auto text-right">{numeroFormateado(estadoDeCuenta.reduce((ttl,cl)=>ttl+=cl.saldo,0))}</div>
+                    <div className="basis-1/4 text-right">Totales:</div>
+                    <div className="basis-1/4 text-right">{numeroFormateado(estadoDeCuenta.reduce((ttl,cl)=>ttl+=cl.presupuesto,0))}</div>
+                    <div className="basis-1/4 text-right">{numeroFormateado(estadoDeCuenta.reduce((ttl,cl)=>ttl+=cl.totalPagos,0))}</div>
+                    <div className="basis-1/4 text-right">{numeroFormateado(estadoDeCuenta.reduce((ttl,cl)=>ttl+=cl.saldo,0))}</div>
                 </div>
             </div>
         </div>

@@ -8,10 +8,10 @@ export default function EdcCliente({ edc }) {
 
         <div className="flex flex-col odd:bg-gray-600 px-4 ">
             <div key={edc.cliente._id} className="flex gap-2 cursor-pointer" onClick={() => setMostrarPagos(!mostrarPagos)}>
-                <div className="basis-8/12 text-nowrap ">{edc.cliente.nombre}</div>
-                <div className="basis-1/12 text-right">{numeroFormateado(edc.presupuesto)}</div>
-                <div className="basis-1/12 text-right">{numeroFormateado(edc.totalPagos)}</div>
-                <div className="basis-1/12 text-right">{numeroFormateado(edc.saldo)}</div>
+                <div className="basis-1/4 truncate">{edc.cliente.nombre}</div>
+                <div className="basis-1/4 text-right">{numeroFormateado(edc.presupuesto)}</div>
+                <div className="basis-1/4 text-right">{numeroFormateado(edc.totalPagos)}</div>
+                <div className="basis-1/4 text-right">{numeroFormateado(edc.saldo)}</div>
             </div>
             {mostrarPagos ?
                 <div className="bg-gray-800 rounded-md mb-2">

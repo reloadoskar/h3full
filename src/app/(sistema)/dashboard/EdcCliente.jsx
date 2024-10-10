@@ -18,8 +18,8 @@ export default function EdcCliente({ edc }) {
                     <h2 className="subtitulo text-center">Pagos:</h2>
                     {edc.pagos.map(pago => (
                         <div key={pago._id} className="flex gap-2 px-2 even:bg-gray-500">
-                            <div className="basis-1/3">{pago.fecha}</div>
-                            <div className="basis-1/3">{pago.tipo}</div>
+                            <div className="basis-1/3 truncate">{pago.fecha}</div>
+                            <div className="basis-1/3 truncate">{pago.tipo}</div>
                             <div className="basis-1/3 text-right">{numeroFormateado(pago.importe)}</div>
                         </div>
                     ))}

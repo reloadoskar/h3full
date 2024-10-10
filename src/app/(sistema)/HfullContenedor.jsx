@@ -28,8 +28,8 @@ export default function HfullContenedor({ payload, children }) {
                 const res = await Promise.all([
                     loadSettings(user.database),
                     loadClientes(user.database),
-                    loadProyectos(user.database),
                     loadUbicacions(user.database),
+                    loadProyectos(user.database),
                     loadPagos(user.database)
                 ])
                 return res
